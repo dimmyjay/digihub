@@ -749,8 +749,9 @@ app.get('/get-all-users', async (req, res) => {
   }
 });
 
-app.listen(3000, '192.168.43.178', () => {
-  console.log('Server is running on http://192.168.43.178:3000');
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
+
 
 
