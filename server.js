@@ -664,8 +664,8 @@ app.delete('/api/delete-from-history/:purchaseId', verifyToken, async (req, res)
 });
 
 //upload slider
-app.use('/uploads', express.static('uploads'));
-
+// app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 let File;
 try {
