@@ -390,7 +390,7 @@ app.get('/get-products', async (req, res) => {
 app.use(bodyParser.json());
 
 
-//app.use('/uploads/profile-images', express.static('uploads/profile-images'));
+
 app.use('/uploads/profile-images', express.static(path.join(__dirname, 'uploads/profile-images')));
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
