@@ -698,7 +698,22 @@ const upload2 = multer({
 
 app.post('/upload', upload2.single('file'), async (req, res) => {
   try {
-    const uploadedFilePath = req.file ? path.normalize(req.file.path) : '';
+    // Check if a file was uploaded
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    // Extract the file extension from the uploaded file
+    const fileExtension = path.extname(req.file.originalname).toLowerCase();
+
+    // Check if the file extension is one of the supported formats (e.g., jpg, jpeg, png)
+    const supportedFormats = ['.jpg', '.jpeg', '.png'];
+    if (!supportedFormats.includes(fileExtension)) {
+      return res.status(400).json({ error: 'Unsupported file format' });
+    }
+
+    // Normalize the uploaded file path
+    const uploadedFilePath = path.normalize(req.file.path);
 
     // Create a new instance of the 'File' model
     const newFile = new File({ filePath: uploadedFilePath });
@@ -710,7 +725,6 @@ app.post('/upload', upload2.single('file'), async (req, res) => {
     res.status(500).json({ error: 'Internal server error', details: error.message });
   }
 });
-
 app.get('/get-uploaded-images', async (req, res) => {
   try {
     const images = await File.find({}, 'filePath');
