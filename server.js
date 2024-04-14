@@ -755,31 +755,14 @@ app.get('/get-all-users', async (req, res) => {
     // Log the number of users retrieved
     console.log(`Fetched ${users.length} users for page ${page}`);
 
-    // Create an array to store user information including profile picture
-    const usersWithProfilePictures = users.map(user => {
-      // Construct the URL to the profile picture based on the file path
-      const profilePictureUrl = `https://digihub-kwg3.onrender.com/${user.profilePicture}`;
-
-      // Return user information along with profile picture URL
-      return {
-        _id: user._id,
-        email: user.email,
-        fullName: user.fullName,
-        location: user.location,
-        profilePicture: profilePictureUrl,
-        // Include other user fields as needed
-      };
-    });
-
-    // Send the users with profile pictures as JSON response
-    res.json(usersWithProfilePictures);
+    // Send the users as JSON response
+    res.json(users);
   } catch (error) {
     // Log any errors that occur during fetching
     console.error('Error fetching users:', error);
     res.status(500).send('Internal Server Error');
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
